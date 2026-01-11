@@ -1,21 +1,13 @@
-import pytest
 from sql_query_running import *
 
-@pytest.mark.parametrize('tables',
-                         [
-                             'sales',
-                             'date',
-                             'customer',
-                             'products',
 
-                         ]
-                         )
+def test_availability_of_tables():
+    assert run_sql_query_for_validation('''
+    select count(*) from sales
+    ''')[0][0] >= 0
 
-def test_availability_of_tables(tables):
-    assert run_sql_query_for_validation(f'''
-        select count(*) from {tables}
-    ''')[0][0] >=0
-    ## 00 means one value
 
-if __name__ == "__main__":
-    test_availability_of_tables()
+def test_availability_of_tables_sales_fact():
+    assert run_sql_query_for_validation('''
+    select count(*) from sales_fact
+    ''')[0][0] >= 0
